@@ -23,10 +23,14 @@ void ALU(unsigned A,unsigned B,char ALUControl,unsigned *ALUresult,char *Zero)
        *ALUresult = B << 16; //A idk 
     else
       Zero = 0000000000000000;
+      
+    else if(ALUcontrol == 110){
+      B = B << 16;
+    }
 <<<<<<< HEAD
       
       
-      *Zer0 = (*ALUresult) 1 ? 0;
+      *Zero = (*ALUresult) 1 ? 0;
 =======
   }
     else if(ALUcontrol == 100){
