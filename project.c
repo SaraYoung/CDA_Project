@@ -7,7 +7,8 @@ void ALU(unsigned A,unsigned B,char ALUControl,unsigned *ALUresult,char *Zero)
 {
   
   if(ALUcontrol == 000)
-    Zero = A+B;
+    *ALUresult = A + B;
+    //Zero = A+B;
   else if(ALUcontrol == 001)
     Zero = A-B;
   else if(ALUcontrol == 010){
@@ -18,9 +19,13 @@ void ALU(unsigned A,unsigned B,char ALUControl,unsigned *ALUresult,char *Zero)
 }
   else if(ALUcontrol == 100)
      if(A<B)
-      Zero = 0000000000000001;
+      //Zero = 0000000000000001;
+       *ALUresult = B << 16; //A idk 
     else
       Zero = 0000000000000000;
+      
+      
+      *Zer0 = (*ALUresult) 1 ? 0;
 }
 
 /* instruction fetch - Sara*/
