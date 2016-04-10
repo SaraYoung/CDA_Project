@@ -10,6 +10,12 @@ void ALU(unsigned A,unsigned B,char ALUControl,unsigned *ALUresult,char *Zero)
     Z = A+B;
   else if(ALUcontrol == 001)
     Z = A-B;
+  else if(ALUcontrol == 010){
+    if(A<B)
+      Z = 1;
+    else
+      Z = 0;
+}
     
 }
 
