@@ -17,15 +17,28 @@ void ALU(unsigned A,unsigned B,char ALUControl,unsigned *ALUresult,char *Zero)
     else
       Zero = 0000000000000000;
 }
-  else if(ALUcontrol == 100)
+  else if(ALUcontrol == 011){
      if(A<B)
       //Zero = 0000000000000001;
        *ALUresult = B << 16; //A idk 
     else
       Zero = 0000000000000000;
+<<<<<<< HEAD
       
       
       *Zer0 = (*ALUresult) 1 ? 0;
+=======
+  }
+    else if(ALUcontrol == 100){
+      if(A==B)
+        Zero = 0000000000000001;
+      else
+        Zero = 0000000000000000;
+    }
+    else if(ALUcontrol == 101){
+      if
+    }
+>>>>>>> f406e1e6a9ec8c27d09eb35aef5513369066b19e
 }
 
 /* instruction fetch - Sara*/
