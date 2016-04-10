@@ -5,18 +5,22 @@
 /* 10 Points */
 void ALU(unsigned A,unsigned B,char ALUControl,unsigned *ALUresult,char *Zero)
 {
-  unsigned Z;
+  
   if(ALUcontrol == 000)
-    Z = A+B;
+    Zero = A+B;
   else if(ALUcontrol == 001)
-    Z = A-B;
+    Zero = A-B;
   else if(ALUcontrol == 010){
     if(A<B)
-      Z = 1;
+      Zero = 0000000000000001;
     else
-      Z = 0;
+      Zero = 0000000000000000;
 }
-    
+  else if(ALUcontrol == 100)
+     if(A<B)
+      Zero = 0000000000000001;
+    else
+      Zero = 0000000000000000;
 }
 
 /* instruction fetch - Sara*/
