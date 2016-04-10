@@ -16,11 +16,21 @@ void ALU(unsigned A,unsigned B,char ALUControl,unsigned *ALUresult,char *Zero)
     else
       Zero = 0000000000000000;
 }
-  else if(ALUcontrol == 100)
+  else if(ALUcontrol == 011){
      if(A<B)
       Zero = 0000000000000001;
     else
       Zero = 0000000000000000;
+  }
+    else if(ALUcontrol == 100){
+      if(A==B)
+        Zero = 0000000000000001;
+      else
+        Zero = 0000000000000000;
+    }
+    else if(ALUcontrol == 101){
+      if
+    }
 }
 
 /* instruction fetch - Sara*/
