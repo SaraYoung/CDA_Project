@@ -57,7 +57,28 @@ int instruction_fetch(unsigned PC,unsigned *Mem,unsigned *instruction)
 /* 10 Points */
 void instruction_partition(unsigned instruction, unsigned *op, unsigned *r1,unsigned *r2, unsigned *r3, unsigned *funct, unsigned *offset, unsigned *jsec)
 {
+*op = (instruction >> 26) & 0x0000003f;
 
+    //bit-wise shift by 21
+    //then AND with 0001 1111 to get r1
+    *r1 = (instruction >> 21) & 0x0000001F;
+
+    //bitwise shift by 16
+    //AND with 0001 1111 to get r2
+    *r2 = (instruction >> 16) & 0x0000001F;
+
+    //shift by 11
+    //AND with 0001 1111 to get r3
+    *r3 = (instruction >> 11) & 0x0000001F;
+
+    //Now funct is equal to instruction AND 0011 1111
+    *funct = instruction & 0x0000003F;
+
+    //when you AND instruction and a 16 bit of (1111 1111 1111 1111) you get the offset
+    *offset = instruction & 0X0000FFFF;
+
+    //jsec is equal to the instruction AND-ed to the 26 bit of (0011 1111 1111 1111 1111 1111 1111)
+    *jsec = instruction & 0x03FFFFFF;
 }
 
 
