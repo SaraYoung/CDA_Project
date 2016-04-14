@@ -87,7 +87,143 @@ void instruction_partition(unsigned instruction, unsigned *op, unsigned *r1,unsi
 /* 15 Points */
 int instruction_decode(unsigned op,struct_controls *controls)
 {
+//Used for stopping on any unused opcode
+    int h = 0;
 
+    //Switch cases
+    switch (op) {
+
+        case 0x00:
+            /*REGISTER TYPE*/
+            //RegDst = 1 when there is a register destination in use (obvs because it stands for Register Destination)
+            controls->RegDst = 1;
+            controls->Jump = 0;
+            controls->Branch = 0;
+            controls->MemRead = 0;
+            controls->MemtoReg = 0;
+            //ALUop is (0111) aka R-type instruction
+            controls->ALUOp = 7;
+            controls->MemWrite = 0;
+            //the ALUSrc is zero because the second operand for the ALU is taken from a register
+            controls->ALUSrc = 0;
+            //RegWrite = 1 when a register is also being written (RegWrite = Register Write)
+            controls->RegWrite = 1;
+            break;
+
+        case 0x0d:
+            /*OR IMMEDIATE*/
+            //RegDst = 1 because there is a register destination in use
+            controls->RegDst = 0;
+            controls->Jump = 0;
+            controls->Branch = 0;
+            controls->MemRead = 0;
+            controls->MemtoReg = 0;
+            //ALUop is (0101)
+            controls->ALUOp = 5;
+            controls->MemWrite = 0;
+            //the ALUSrc = 0 because the second operand for the ALU is taken from a register
+            controls->ALUSrc = 1;
+            //RegWrite = 1 because a register is being written
+            controls->RegWrite = 1;
+            break;
+
+        case 0x23:
+            /*LOAD WORD*/
+            controls->RegDst = 0;
+            controls->Jump = 0;
+            controls->Branch = 0;
+            //MemRead = 1 because there is something being read from memory
+            controls->MemRead = 1;
+            //MemtoReg = 1 Memory goes (is written) to the register AFTER its loaded
+            controls->MemtoReg = 1;
+            //ALUop = 0
+            controls->ALUOp = 0;
+            controls->MemWrite = 0;
+            //ALUSrc = 1 since instruction = immediate type
+            controls->ALUSrc = 1;
+            //RegWrite is on because a register is being written
+            controls->RegWrite = 1;
+            break;
+
+        case 0x2b:
+            /*STORE WORD*/
+            controls->RegDst = 2;
+            controls->Jump = 0;
+            controls->Branch = 0;
+            controls->MemRead = 0;
+            controls->MemtoReg = 2;
+            //ALUop is 0
+            controls->ALUOp = 0;
+            //MemWrite = 1 because we are writing in to the memory
+            controls->MemWrite = 1;
+            //ALUSrc = 1 because the second operand for the ALU is taken from the instruction,
+            controls->ALUSrc = 1;
+            controls->RegWrite = 0;
+            break;
+
+        case 0x0a:
+            /*SET LESS THAN IMMEDIATE*/
+            controls->RegDst = 0;
+            controls->Jump = 0;
+            controls->Branch = 0;
+            controls->MemRead = 0;
+            controls->MemtoReg = 0;
+            //the ALUop is (0010) means the ALU will do set less than
+            controls->ALUOp = 2;
+            controls->MemWrite = 0;
+            //ALUSrc = 1 since instruction = immediate type
+            controls->ALUSrc = 1;
+            //RegWrite is on because (guess what) register is being written (shocking
+            controls->RegWrite = 1;
+            break;
+
+        case 0x04:
+            /*BRANCH EQ*/
+            controls->RegDst = 2;
+            controls->Jump = 0;
+            //Branch = 1 when the instruction is a branch & the equal comparator is being used
+            controls->Branch = 1;
+            controls->MemRead = 0;
+            controls->MemtoReg = 2;
+            controls->ALUOp = 0;
+            controls->MemWrite = 0;
+            //ALUSrc = 1 when the second operand for the ALU is in the instruction
+            controls->ALUSrc = 1;
+            controls->RegWrite = 0;
+            break;
+
+        case 0x01:
+            /*BRANCH: IF EQUAL TO OR GREATER THAN 0*/
+            controls->RegDst = 0;
+            controls->Jump = 0;
+            //Branch = 1 when the instruction is a branch & the equal comparator is used
+            controls->Branch = 1;
+            controls->MemRead = 0;
+            controls->MemtoReg = 0;
+            controls->ALUOp = 6;
+            controls->MemWrite = 0;
+            //ALUSrc = 1 when the second op for the ALU is in the instruction
+            controls->ALUSrc = 1;
+            controls->RegWrite = 0;
+            break;
+
+        case 0x02:
+            /*JUMP*/
+            controls->RegDst = 2;
+            controls->Jump = 1;
+            controls->Branch = 2;
+            controls->MemRead = 2;
+            controls->MemtoReg = 2;
+            controls->ALUOp = 0;
+            controls->MemWrite = 0;
+            controls->ALUSrc = 2;
+            controls->RegWrite = 0;
+            break;
+        default:
+            //Stuff we don't work with
+            h = 1;
+    }
+    return h;
 }
 
 /* Read Register - Sara*/
