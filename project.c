@@ -6,43 +6,46 @@
 void ALU(unsigned A,unsigned B,char ALUControl,unsigned *ALUresult,char *Zero)
 {
   
-  if(ALUcontrol == 000)
+  if(ALUcontrol == 0)
     *ALUresult = A + B;
     //Zero = A+B;
-  else if(ALUcontrol == 001)
+  else if(ALUcontrol == 1)
     Zero = A-B;
-  else if(ALUcontrol == 010){
-    if(A<B)
-      Zero = 0000000000000001;
-    else
-      Zero = 0000000000000000;
-}
-  else if(ALUcontrol == 011){
-     if(A<B)
+  else if(ALUcontrol == 2){
+    if((signed)A<(signed)B)
+      *ALUresult = 1;
       //Zero = 0000000000000001;
-       *ALUresult = B << 16; //A idk 
     else
-      Zero = 0000000000000000;
+      *ALUresult = 0;
+      //Zero = 0000000000000000;
+}
+  else if(ALUcontrol == 3){
+     if((unsigned)A<(unsigned)B)
+     *ALUresult = 1;
+      //Zero = 0000000000000001;
+       //*ALUresult = B << 16; //A idk 
+    else
+      *ALUresult = 0;
+     // Zero = 0000000000000000;
       
-    else if(ALUcontrol == 110){
-      B = B << 16;
+    else if(ALUcontrol == 4){
+      *ALUresult = A&B;
+      //B = B << 16;
     }
-<<<<<<< HEAD
-      
+    else if(ALUcontrol == 5){
+      *ALUresult = A|B;
+    }
+    else if(ALUcontrol == 6){
+      *ALUresult = B<<16;
+    }
+    else if(ALUcontrol == 7){
+      *ALUresult = ~A;
+    }
       
       *Zero = (*ALUresult) 1 ? 0;
-=======
   }
-    else if(ALUcontrol == 100){
-      if(A==B)
-        Zero = 0000000000000001;
-      else
-        Zero = 0000000000000000;
-    }
-    else if(ALUcontrol == 101){
-      if
-    }
->>>>>>> f406e1e6a9ec8c27d09eb35aef5513369066b19e
+   
+//>>>>>>> f406e1e6a9ec8c27d09eb35aef5513369066b19e
 }
 
 /* instruction fetch - Sara*/
