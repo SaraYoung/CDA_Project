@@ -52,7 +52,15 @@ void ALU(unsigned A,unsigned B,char ALUControl,unsigned *ALUresult,char *Zero)
 /* 10 Points */
 int instruction_fetch(unsigned PC,unsigned *Mem,unsigned *instruction)
 {
-
+  unsigned mem_index;
+  mem_index = PC>>2;
+  
+  if(PC%4 == 0){
+    *instruction = Mem[mem_index]
+    return 0;
+  }
+  else
+    return 1;
 }
 
 
