@@ -12,44 +12,55 @@ void ALU(unsigned A,unsigned B,char ALUControl,unsigned *ALUresult,char *Zero)
   else if(ALUcontrol == 001)
     Zero = A-B;
   else if(ALUcontrol == 010){
-    if(A<B)
-      Zero = 0000000000000001;
+    if((signed)A<(signed)B)
+      *ALUresult = 1;
+      //Zero = 0000000000000001;
     else
-      Zero = 0000000000000000;
+      *ALUresult = 0;
+      //Zero = 0000000000000000;
 }
   else if(ALUcontrol == 011){
-     if(A<B)
+     if((unsigned)A<(unsigned)B)
+     *ALUresult = 1;
       //Zero = 0000000000000001;
-       *ALUresult = B << 16; //A idk 
+       //*ALUresult = B << 16; //A idk 
     else
-      Zero = 0000000000000000;
+      *ALUresult = 0;
+     // Zero = 0000000000000000;
       
     else if(ALUcontrol == 110){
-      B = B << 16;
-    }
-<<<<<<< HEAD
-      
-      
-      *Zero = (*ALUresult) 1 ? 0;
-=======
-  }
-    else if(ALUcontrol == 100){
-      if(A==B)
-        Zero = 0000000000000001;
-      else
-        Zero = 0000000000000000;
+      *ALUresult = A&B;
+      //B = B << 16;
     }
     else if(ALUcontrol == 101){
-      if
+      *ALUresult = A|B;
     }
->>>>>>> f406e1e6a9ec8c27d09eb35aef5513369066b19e
+    else if(ALUcontrol == 110){
+      *ALUresult = B<<16;
+    }
+    else if(ALUcontrol == 111){
+      *ALUresult = ~A;
+    }
+      
+      *Zero = (*ALUresult) 1 ? 0;
+  }
+   
+//>>>>>>> f406e1e6a9ec8c27d09eb35aef5513369066b19e
 }
 
 /* instruction fetch - Sara*/
 /* 10 Points */
 int instruction_fetch(unsigned PC,unsigned *Mem,unsigned *instruction)
 {
-
+  unsigned mem_index;
+  mem_index = PC>>2;
+  
+  if(PC%4 == 0){
+    *instruction = Mem[mem_index]
+    return 0;
+  }
+  else
+    return 1;
 }
 
 
@@ -230,7 +241,8 @@ int instruction_decode(unsigned op,struct_controls *controls)
 /* 5 Points */
 void read_register(unsigned r1,unsigned r2,unsigned *Reg,unsigned *data1,unsigned *data2)
 {
-
+  *data1 = Reg[r1];
+  *data2 = Reg[r2];
 }
 
 
@@ -285,6 +297,12 @@ void write_register(unsigned r2,unsigned r3,unsigned memdata,unsigned ALUresult,
 /* 10 Points */
 void PC_update(unsigned jsec,unsigned extended_value,char Branch,char Jump,char Zero,unsigned *PC)
 {
-
+  *PC+=4;
+  if(Branch ==1&& Zero == 1){
+    PC+=extended_valuse<<2;
+  }
+  else if(jump==1){
+    *PC = jsec<<2 | (*PC&0xf0000000);
+  }
 }
 
