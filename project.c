@@ -6,13 +6,13 @@
 void ALU(unsigned A,unsigned B,char ALUControl,unsigned *ALUresult,char *Zero)
 {
   
-  if(ALUcontrol == 000)
+  if(ALUControl == 000)
     *ALUresult = A + B;
     //Zero = A+B;
-  else if(ALUcontrol == 001)
+  else if(ALUControl == 001)
     *ALUresult = A-B;
     //Zero = A-B;
-  else if(ALUcontrol == 010){
+  else if(ALUControl == 010){
     if((signed)A<(signed)B)
       *ALUresult = 1;
       //Zero = 0000000000000001;
@@ -20,7 +20,7 @@ void ALU(unsigned A,unsigned B,char ALUControl,unsigned *ALUresult,char *Zero)
       *ALUresult = 0;
       //Zero = 0000000000000000;
 }
-  else if(ALUcontrol == 011){
+  else if(ALUControl == 011){
      if((unsigned)A<(unsigned)B)
      *ALUresult = 1;
       //Zero = 0000000000000001;
@@ -29,17 +29,17 @@ void ALU(unsigned A,unsigned B,char ALUControl,unsigned *ALUresult,char *Zero)
       *ALUresult = 0;
      // Zero = 0000000000000000;
       
-    else if(ALUcontrol == 110){
+    else if(ALUControl == 110){
       *ALUresult = A&B;
       //B = B << 16;
     }
-    else if(ALUcontrol == 101){
+    else if(ALUControl == 101){
       *ALUresult = A|B;
     }
-    else if(ALUcontrol == 110){
+    else if(ALUControl == 110){
       *ALUresult = B<<16;
     }
-    else if(ALUcontrol == 111){
+    else if(ALUControl == 111){
       *ALUresult = ~A;
     }
       
