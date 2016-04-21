@@ -20,7 +20,8 @@ void ALU(unsigned A,unsigned B,char ALUControl,unsigned *ALUresult,char *Zero)
       *ALUresult = 0;
       //Zero = 0000000000000000;
 }
-  else if(ALUControl == 011){
+  else if(ALUControl == 011)
+  {
      if((unsigned)A<(unsigned)B)
      *ALUresult = 1;
       //Zero = 0000000000000001;
@@ -28,7 +29,7 @@ void ALU(unsigned A,unsigned B,char ALUControl,unsigned *ALUresult,char *Zero)
     else
       *ALUresult = 0;
      // Zero = 0000000000000000;
-      
+  }
     else if(ALUControl == 110){
       *ALUresult = A&B;
       //B = B << 16;
@@ -43,7 +44,7 @@ void ALU(unsigned A,unsigned B,char ALUControl,unsigned *ALUresult,char *Zero)
       *ALUresult = ~A;
     }
       
-      *Zero = (*ALUresult) 1 ? 0;
+      *Zero = (*ALUresult) ? 1 : 0;
   }
    
 //>>>>>>> f406e1e6a9ec8c27d09eb35aef5513369066b19e
@@ -355,7 +356,7 @@ void PC_update(unsigned jsec,unsigned extended_value,char Branch,char Jump,char 
 {
   *PC+=4;
   if(Branch ==1&& Zero == 1){
-    PC+=extended_valuse<<2;
+    PC+=extended_value<<2;
   }
   else if(jump==1){
     *PC = jsec<<2 | (*PC&0xf0000000);
