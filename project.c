@@ -12,14 +12,15 @@ void ALU(unsigned A,unsigned B,char ALUControl,unsigned *ALUresult,char *Zero)
   else if(ALUControl == 001)
     *ALUresult = A-B;
     //Zero = A-B;
-  else if(ALUControl == 010){
+  else if(ALUControl == 010)
+  {
     if((signed)A<(signed)B)
       *ALUresult = 1;
       //Zero = 0000000000000001;
     else
       *ALUresult = 0;
       //Zero = 0000000000000000;
-}
+  }
   else if(ALUControl == 011)
   {
      if((unsigned)A<(unsigned)B)
@@ -45,9 +46,7 @@ void ALU(unsigned A,unsigned B,char ALUControl,unsigned *ALUresult,char *Zero)
     }
       
       *Zero = (*ALUresult) ? 1 : 0;
-  }
-   
-//>>>>>>> f406e1e6a9ec8c27d09eb35aef5513369066b19e
+  
 }
 
 /* instruction fetch - Sara*/
