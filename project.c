@@ -263,13 +263,67 @@ void sign_extend(unsigned offset,unsigned *extended_value)
 /* 10 Points */
 int ALU_operations(unsigned data1,unsigned data2,unsigned extended_value,unsigned funct,char ALUOp,char ALUSrc,unsigned *ALUresult,char *Zero)
 {
-
+    int temp = 0; 
+    
+    if(ALUSrc == 1)
+        data2 = extended_value;
+    
+    if(ALUop == 7)
+    {
+        //Implement :: add, sub, and, or, slt, slu
+        switch(funct)
+        {
+             case 32:
+                ALUOp = 0;
+                ALU(data1, data2, ALUOp, ALUresult, Zero);
+                break;
+             case 34:
+                ALUOp = 1;
+                ALU(data1, data2, ALUOp, ALUresult, Zero);
+                break;
+             case 36:
+                ALUOp = 4;
+                ALU(data1, data2, ALUOp, ALUresult, Zero);
+                break; 
+             case 37:
+                ALUOp = 5;
+                ALU(data1, data2, ALUOp, ALUresult, Zero);
+                break; 
+             case 42:
+                ALUOp = 2;
+                ALU(data1, data2, ALUOp, ALUresult, Zero);
+                break; 
+             case 43:
+                ALUOp = 3;
+                ALU(data1, data2, ALUOp, ALUresult, Zero);
+                break; 
+            default: 
+                temp++;
+                break;
+        }   
+        return temp;
+    }
+    ALU(data1, data2, ALUOp, ALUresult, Zero);
+    return temp;
 }
 
 /* Read / Write Memory - Cal */
 /* 10 Points */
 int rw_memory(unsigned ALUresult,unsigned data2,char MemWrite,char MemRead,unsigned *memdata,unsigned *Mem)
 {
+    if(MemRead == 1) {
+        if(ALUresult % 4 != 0)
+            return 1;
+    *memdata = Mem[ALUresult >> 2];
+    }
+    
+    if(MemWrite == 1){
+        if(ALUresult%4 != 0)
+            return 1;
+       
+       Mem[ALUresult>>2] = data2;
+    }
+     return 0;
 
 }
 
@@ -278,17 +332,18 @@ int rw_memory(unsigned ALUresult,unsigned data2,char MemWrite,char MemRead,unsig
 /* 10 Points */
 void write_register(unsigned r2,unsigned r3,unsigned memdata,unsigned ALUresult,char RegWrite,char RegDst,char MemtoReg,unsigned *Reg)
 {
-    //Write the data (ALUresult or memdata )t o a register (Reg) addreesed by r2 or r3
+    //Write the data (ALUresult or memdata )to a register (Reg) addreesed by
+    // r2 or r3, if asserted
     if(RegWrite == 1)
     {
-        
-    }
-    else
-    {
         if(MemtoReg == 1)
-            Reg[r3] = memdata;
-        else
-            
+            Reg[r2] = memdata; 
+        else {
+            if(RegDst == 1)
+                Reg[r3] = ALUresult;
+            else 
+                Reg[r2] = ALUresult;
+        }
     }
            
 }
