@@ -31,7 +31,7 @@ void ALU(unsigned A,unsigned B,char ALUControl,unsigned *ALUresult,char *Zero)
       *ALUresult = 0;
      // Zero = 0000000000000000;
   }
-    else if(ALUControl == 110){
+    else if(ALUControl == 100){
       *ALUresult = A&B;
       //B = B << 16;
     }
