@@ -10,7 +10,8 @@ void ALU(unsigned A,unsigned B,char ALUControl,unsigned *ALUresult,char *Zero)
     *ALUresult = A + B;
     //Zero = A+B;
   else if(ALUcontrol == 001)
-    Zero = A-B;
+    *ALUresult = A-B;
+    //Zero = A-B;
   else if(ALUcontrol == 010){
     if((signed)A<(signed)B)
       *ALUresult = 1;
