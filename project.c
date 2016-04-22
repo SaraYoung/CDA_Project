@@ -57,7 +57,7 @@ int instruction_fetch(unsigned PC,unsigned *Mem,unsigned *instruction)
   mem_index = PC>>2;
   
   if(PC%4 == 0){
-    *instruction = Mem[mem_index]
+    *instruction = Mem[mem_index];
     return 0;
   }
   else
@@ -269,7 +269,7 @@ int ALU_operations(unsigned data1,unsigned data2,unsigned extended_value,unsigne
     if(ALUSrc == 1)
         data2 = extended_value;
     
-    if(ALUop == 7)
+    if(ALUOp == 7)
     {
         //Implement :: add, sub, and, or, slt, slu
         switch(funct)
@@ -318,14 +318,14 @@ int rw_memory(unsigned ALUresult,unsigned data2,char MemWrite,char MemRead,unsig
     *memdata = Mem[ALUresult >> 2];
     }
     
-    if(MemWrite == 1){
+    if(MemWrite == 1)
+    {
         if(ALUresult%4 != 0)
             return 1;
-       
+            
        Mem[ALUresult>>2] = data2;
     }
-     return 0;
-
+    return 0;
 }
 
 
