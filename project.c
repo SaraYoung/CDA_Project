@@ -260,6 +260,8 @@ void sign_extend(unsigned offset,unsigned *extended_value)
     }
 }
 
+
+
 /* ALU operations - Cal*/
 /* 10 Points */
 int ALU_operations(unsigned data1,unsigned data2,unsigned extended_value,unsigned funct,char ALUOp,char ALUSrc,unsigned *ALUresult,char *Zero)
@@ -268,6 +270,7 @@ int ALU_operations(unsigned data1,unsigned data2,unsigned extended_value,unsigne
     
     if(ALUSrc == 1)
         data2 = extended_value;
+
     
     if(ALUOp == 7)
     {
@@ -290,6 +293,10 @@ int ALU_operations(unsigned data1,unsigned data2,unsigned extended_value,unsigne
                 ALUOp = 5;
                 ALU(data1, data2, ALUOp, ALUresult, Zero);
                 break; 
+             case 39:
+                ALUOp = 7;
+                ALU(data1, data2, ALUOp, ALUresult, Zero);
+                break;
              case 42:
                 ALUOp = 2;
                 ALU(data1, data2, ALUOp, ALUresult, Zero);
@@ -306,6 +313,7 @@ int ALU_operations(unsigned data1,unsigned data2,unsigned extended_value,unsigne
     }
     ALU(data1, data2, ALUOp, ALUresult, Zero);
     return temp;
+       
 }
 
 /* Read / Write Memory - Cal */
@@ -315,15 +323,14 @@ int rw_memory(unsigned ALUresult,unsigned data2,char MemWrite,char MemRead,unsig
     if(MemRead == 1) {
         if(ALUresult % 4 != 0)
             return 1;
-    *memdata = Mem[ALUresult >> 2];
+       *memdata = Mem[ALUresult >> 2];
     }
     
     if(MemWrite == 1)
     {
         if(ALUresult%4 != 0)
-            return 1;
-            
-       Mem[ALUresult>>2] = data2;
+            return 1;    
+        Mem[ALUresult>>2] = data2; //Write the value of data2 to the memory location addressed by ALURESULT
     }
     return 0;
 }
@@ -333,20 +340,29 @@ int rw_memory(unsigned ALUresult,unsigned data2,char MemWrite,char MemRead,unsig
 /* 10 Points */
 void write_register(unsigned r2,unsigned r3,unsigned memdata,unsigned ALUresult,char RegWrite,char RegDst,char MemtoReg,unsigned *Reg)
 {
-    //Write the data (ALUresult or memdata )to a register (Reg) addreesed by
-    // r2 or r3, if asserted
+    //Write the data (ALUresult or memdata )to a register (Reg) addreesed by r2 or r3, if asserted
+    /*If RegWrite is deasserted do nothing */
+    if(!RegWrite)
+        return;
+    
     if(RegWrite == 1)
     {
-        if(RegDst == 1)
-          Reg[r3] = ALUresult;
-        else 
-          Reg[r2] = ALUresult;
+          //ALUresult or memdata 
+          if(MemtoReg == 1)
+          {
+              if(RegDst == 0)
+                Reg[r2] = memdata;
+              else
+                Reg[r3] = memdata;
+          }
+          if(MemtoReg == 0)
+          {
+            if(RegDst == 1)
+              Reg[r3] = ALUresult;
+            else
+              Reg[r2] = ALUresult;
+          }
     }
-    else if(MemtoReg == 1){
-      Reg[r2] = memdata;
-    }
-    else 
-      Reg[r3] = ALUresult;
            
 }
 
