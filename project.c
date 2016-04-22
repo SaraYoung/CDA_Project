@@ -3,16 +3,16 @@
 
 /* ALU - Sara */
 /* 10 Points */
-void ALU(unsigned A,unsigned B,char ALUControl,unsigned *ALUresult,char *Zero)
+void ALU(unsigned A,unsigned B,int ALUControl,unsigned *ALUresult,char *Zero)
 {
   
-  if(ALUControl == 000)
+  if(ALUControl == 0)
     *ALUresult = A + B;
     //Zero = A+B;
-  else if(ALUControl == 001)
+  else if(ALUControl == 1)
     *ALUresult = A-B;
     //Zero = A-B;
-  else if(ALUControl == 010)
+  else if(ALUControl == 2)
   {
     if((signed)A<(signed)B)
       *ALUresult = 1;
@@ -21,7 +21,7 @@ void ALU(unsigned A,unsigned B,char ALUControl,unsigned *ALUresult,char *Zero)
       *ALUresult = 0;
       //Zero = 0000000000000000;
   }
-  else if(ALUControl == 011)
+  else if(ALUControl == 3)
   {
      if((unsigned)A<(unsigned)B)
      *ALUresult = 1;
@@ -31,17 +31,17 @@ void ALU(unsigned A,unsigned B,char ALUControl,unsigned *ALUresult,char *Zero)
       *ALUresult = 0;
      // Zero = 0000000000000000;
   }
-    else if(ALUControl == 100){
+    else if(ALUControl == 4){
       *ALUresult = A&B;
       //B = B << 16;
     }
-    else if(ALUControl == 101){
+    else if(ALUControl == 5){
       *ALUresult = A|B;
     }
-    else if(ALUControl == 110){
+    else if(ALUControl == 6){
       *ALUresult = B<<16;
     }
-    else if(ALUControl == 111){
+    else if(ALUControl == 7){
       *ALUresult = ~A;
     }
       
