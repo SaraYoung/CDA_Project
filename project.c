@@ -337,15 +337,16 @@ void write_register(unsigned r2,unsigned r3,unsigned memdata,unsigned ALUresult,
     // r2 or r3, if asserted
     if(RegWrite == 1)
     {
-        if(MemtoReg == 1)
-            Reg[r2] = memdata; 
-        else {
-            if(RegDst == 1)
-                Reg[r3] = ALUresult;
-            else 
-                Reg[r2] = ALUresult;
-        }
+        if(RegDst == 1)
+          Reg[r3] = ALUresult;
+        else 
+          Reg[r2] = ALUresult;
     }
+    else if(MemtoReg == 1){
+      Reg[r2] = memdata;
+    }
+    else 
+      Reg[r3] = ALUresult;
            
 }
 
